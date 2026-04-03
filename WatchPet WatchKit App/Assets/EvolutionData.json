@@ -1,0 +1,149 @@
+{
+  "species": [
+    {
+      "id": "baby_blob",
+      "name": "Blobby",
+      "stage": 0,
+      "spritePrefix": "baby_blob",
+      "frameCount": 2,
+      "description": "A freshly hatched creature. It needs love and care to grow.",
+      "moves": [
+        { "id": "tackle",  "name": "Tackle",  "basePower": 20, "accuracy": 95, "attributeBoost": "combat" },
+        { "id": "charm",   "name": "Charm",   "basePower": 15, "accuracy": 100, "attributeBoost": "cuteness" }
+      ]
+    },
+    {
+      "id": "child_fighter",
+      "name": "Knucklox",
+      "stage": 1,
+      "spritePrefix": "child_fighter",
+      "frameCount": 3,
+      "description": "A scrappy fighter who loves a good scrap. High combat & athleticism.",
+      "moves": [
+        { "id": "scratch",    "name": "Scratch",    "basePower": 18, "accuracy": 100, "attributeBoost": "combat" },
+        { "id": "sprint",     "name": "Sprint",     "basePower": 22, "accuracy": 90,  "attributeBoost": "athleticism" },
+        { "id": "bite",       "name": "Bite",       "basePower": 30, "accuracy": 85,  "attributeBoost": "combat" }
+      ]
+    },
+    {
+      "id": "child_cute",
+      "name": "Flufflet",
+      "stage": 1,
+      "spritePrefix": "child_cute",
+      "frameCount": 3,
+      "description": "Impossibly adorable. Its cuteness is actually a devastating weapon.",
+      "moves": [
+        { "id": "tackle",    "name": "Tackle",    "basePower": 20, "accuracy": 95,  "attributeBoost": "combat" },
+        { "id": "cute_eyes", "name": "Cute Eyes", "basePower": 28, "accuracy": 95,  "attributeBoost": "cuteness" },
+        { "id": "charm",     "name": "Charm",     "basePower": 15, "accuracy": 100, "attributeBoost": "cuteness" }
+      ]
+    },
+    {
+      "id": "adult_warrior",
+      "name": "Blazeron",
+      "stage": 2,
+      "spritePrefix": "adult_warrior",
+      "frameCount": 4,
+      "description": "A battle-hardened warrior. Forged through countless victories.",
+      "moves": [
+        { "id": "blazing",    "name": "Blazing Fist", "basePower": 40, "accuracy": 80, "attributeBoost": "combat" },
+        { "id": "swift_kick", "name": "Swift Kick",   "basePower": 35, "accuracy": 90, "attributeBoost": "athleticism" },
+        { "id": "bite",       "name": "Bite",         "basePower": 30, "accuracy": 85, "attributeBoost": "combat" },
+        { "id": "sprint",     "name": "Sprint",       "basePower": 22, "accuracy": 90, "attributeBoost": "athleticism" }
+      ]
+    },
+    {
+      "id": "adult_athlete",
+      "name": "Swiftora",
+      "stage": 2,
+      "spritePrefix": "adult_athlete",
+      "frameCount": 4,
+      "description": "Born to run. Every step you take makes Swiftora stronger.",
+      "moves": [
+        { "id": "swift_kick", "name": "Swift Kick",   "basePower": 35, "accuracy": 90, "attributeBoost": "athleticism" },
+        { "id": "sprint",     "name": "Sprint",       "basePower": 22, "accuracy": 90, "attributeBoost": "athleticism" },
+        { "id": "scratch",    "name": "Scratch",      "basePower": 18, "accuracy": 100, "attributeBoost": "combat" },
+        { "id": "tackle",     "name": "Tackle",       "basePower": 20, "accuracy": 95,  "attributeBoost": "combat" }
+      ]
+    },
+    {
+      "id": "adult_sage",
+      "name": "Luminox",
+      "stage": 2,
+      "spritePrefix": "adult_sage",
+      "frameCount": 4,
+      "description": "Ancient wisdom radiates from its eyes. Well-loved and rarely dirty.",
+      "moves": [
+        { "id": "insight",   "name": "Insight",   "basePower": 32, "accuracy": 88, "attributeBoost": "wisdom" },
+        { "id": "cute_eyes", "name": "Cute Eyes", "basePower": 28, "accuracy": 95, "attributeBoost": "cuteness" },
+        { "id": "charm",     "name": "Charm",     "basePower": 15, "accuracy": 100,"attributeBoost": "cuteness" },
+        { "id": "tackle",    "name": "Tackle",    "basePower": 20, "accuracy": 95, "attributeBoost": "combat" }
+      ]
+    }
+  ],
+
+  "paths": [
+    {
+      "fromSpeciesID": "baby_blob",
+      "toSpeciesID":   "child_fighter",
+      "priority":      10,
+      "condition": {
+        "minTimeInStageHours": 4,
+        "attributeThresholds": { "combat": 15 }
+      }
+    },
+    {
+      "fromSpeciesID": "baby_blob",
+      "toSpeciesID":   "child_cute",
+      "priority":      5,
+      "condition": {
+        "minTimeInStageHours": 4,
+        "minHappiness": 60,
+        "attributeThresholds": { "cuteness": 15 }
+      }
+    },
+
+    {
+      "fromSpeciesID": "child_fighter",
+      "toSpeciesID":   "adult_warrior",
+      "priority":      20,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minBattleWins": 5,
+        "attributeThresholds": { "combat": 40, "athleticism": 20 }
+      }
+    },
+    {
+      "fromSpeciesID": "child_fighter",
+      "toSpeciesID":   "adult_athlete",
+      "priority":      15,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minTotalSteps": 10000,
+        "attributeThresholds": { "athleticism": 40 }
+      }
+    },
+
+    {
+      "fromSpeciesID": "child_cute",
+      "toSpeciesID":   "adult_sage",
+      "priority":      20,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 70,
+        "minCleanliness": 60,
+        "attributeThresholds": { "wisdom": 30, "cuteness": 30 }
+      }
+    },
+    {
+      "fromSpeciesID": "child_cute",
+      "toSpeciesID":   "adult_athlete",
+      "priority":      15,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minTotalSteps": 8000,
+        "attributeThresholds": { "athleticism": 35, "cuteness": 20 }
+      }
+    }
+  ]
+}
