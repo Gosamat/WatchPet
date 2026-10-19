@@ -40,7 +40,8 @@ struct BattleState {
     // MARK: Player move
     mutating func executePlayerMove(_ move: Move) {
         guard turn == .player, !isOver else { return }
-        let dmg = calculateDamage(move: move, attacker: player, defender: opponent)
+        let (dmg, crit) = calculateDamage(move: move, attacker: player, defender: opponent)
+        if crit { appendLog("Critical hit!") }
         opponent.hp = max(0, opponent.hp - dmg)
         appendLog("\(player.name) used \(move.name)! \(dmg) dmg.")
         if opponent.hp == 0 {
@@ -55,7 +56,8 @@ struct BattleState {
     mutating func executeAIMove() {
         guard turn == .opponent, !isOver else { return }
         let move = bestAIMove()
-        let dmg  = calculateDamage(move: move, attacker: opponent, defender: player)
+        let (dmg, crit) = calculateDamage(move: move, attacker: opponent, defender: player)
+        if crit { appendLog("Critical hit!") }
         player.hp = max(0, player.hp - dmg)
         appendLog("\(opponent.name) used \(move.name)! \(dmg) dmg.")
         if player.hp == 0 {
@@ -66,11 +68,11 @@ struct BattleState {
         turn = .player
     }
 
-    // MARK: Damage formula
-    private func calculateDamage(move: Move, attacker: BattleParticipant, defender: BattleParticipant) -> Int {
+    // MARK: Damage formula — returns (damage, isCrit)
+    private func calculateDamage(move: Move, attacker: BattleParticipant, defender: BattleParticipant) -> (Int, Bool) {
         // Hit check
         guard Int.random(in: 1...100) <= move.accuracy else {
-            return 0
+            return (0, false)
         }
 
         var dmg = Double(move.basePower)
@@ -91,12 +93,10 @@ struct BattleState {
         dmg *= defMult
 
         // 10% crit chance
-        if Double.random(in: 0..<1) < 0.10 {
-            dmg *= 1.5
-            appendLog("Critical hit!")
-        }
+        let isCrit = Double.random(in: 0..<1) < 0.10
+        if isCrit { dmg *= 1.5 }
 
-        return max(1, Int(dmg))
+        return (max(1, Int(dmg)), isCrit)
     }
 
     private mutating func appendLog(_ text: String) {
@@ -105,8 +105,8 @@ struct BattleState {
 
     private func bestAIMove() -> Move {
         opponent.moves.max {
-            calculateDamage(move: $0, attacker: opponent, defender: player) <
-            calculateDamage(move: $1, attacker: opponent, defender: player)
+            calculateDamage(move: $0, attacker: opponent, defender: player).0 <
+            calculateDamage(move: $1, attacker: opponent, defender: player).0
         } ?? opponent.moves[0]
     }
 }
@@ -114,13 +114,13 @@ struct BattleState {
 // MARK: - Factory
 extension BattleState {
     static func make(pet: VirtualPet, petSpecies: Species, opponentSpecies: Species) -> BattleState {
-        let petHP      = 50 + pet.attributes.combat / 2
+        let petHP      = pet.effectiveHP          // carry over persisted HP
         let opponentHP = 50 + Int.random(in: 10...30)
 
         let player = BattleParticipant(
             name:       petSpecies.name,
             hp:         petHP,
-            maxHP:      petHP,
+            maxHP:      pet.maxHP,
             moves:      petSpecies.moves,
             attributes: pet.attributes,
             isPlayer:   true

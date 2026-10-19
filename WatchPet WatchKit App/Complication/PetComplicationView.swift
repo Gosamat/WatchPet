@@ -1,45 +1,102 @@
 import WidgetKit
 import SwiftUI
 
+// MARK: - PetMood
+enum PetMood: String {
+    case happy, neutral, sad, sick
+
+    init(pet: VirtualPet) {
+        if pet.isSick || pet.health < 25 {
+            self = .sick
+        } else if pet.happiness >= 60 && pet.health >= 50 {
+            self = .happy
+        } else if pet.happiness >= 30 {
+            self = .neutral
+        } else {
+            self = .sad
+        }
+    }
+
+    var emoji: String {
+        switch self {
+        case .happy:   return "😊"
+        case .neutral: return "😐"
+        case .sad:     return "😢"
+        case .sick:    return "🤒"
+        }
+    }
+
+    var label: String {
+        switch self {
+        case .happy:   return "HAPPY"
+        case .neutral: return "OK"
+        case .sad:     return "SAD"
+        case .sick:    return "SICK"
+        }
+    }
+
+    var ringColor: Color {
+        switch self {
+        case .happy:   return .green
+        case .neutral: return .yellow
+        case .sad:     return Color(red: 1, green: 0.4, blue: 0.2)
+        case .sick:    return Color(red: 0.6, green: 0.9, blue: 0.3)
+        }
+    }
+}
+
 // MARK: - PetEntry
 struct PetEntry: TimelineEntry {
-    let date:     Date
-    let wellness: Int      // 0–100 overall wellness
-    let hunger:   Int
-    let petName:  String
+    let date:         Date
+    let wellness:     Int
+    let hunger:       Int
+    let happiness:    Int
+    let health:       Int
+    let petName:      String
     let spritePrefix: String
+    let frameCount:   Int
+    let mood:         PetMood
+    let isSick:       Bool
 }
 
 // MARK: - PetComplicationProvider
 struct PetComplicationProvider: TimelineProvider {
 
     func placeholder(in context: Context) -> PetEntry {
-        PetEntry(date: Date(), wellness: 80, hunger: 70, petName: "Blobby", spritePrefix: "baby_blob")
+        PetEntry(date: Date(), wellness: 80, hunger: 70, happiness: 75,
+                 health: 90, petName: "Flameling", spritePrefix: "baby_flame",
+                 frameCount: 2, mood: .happy, isSick: false)
     }
 
     func getSnapshot(in context: Context, completion: @escaping (PetEntry) -> Void) {
-        completion(entry())
+        completion(makeEntry())
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<PetEntry>) -> Void) {
-        let current = entry()
-        // Refresh every 20 minutes so stats stay reasonably current
-        let nextUpdate = Date().addingTimeInterval(20 * 60)
-        completion(Timeline(entries: [current], policy: .after(nextUpdate)))
+        let entry = makeEntry()
+        let next  = Date().addingTimeInterval(15 * 60)   // refresh every 15 min
+        completion(Timeline(entries: [entry], policy: .after(next)))
     }
 
-    private func entry() -> PetEntry {
+    private func makeEntry() -> PetEntry {
         guard let pet = PersistenceManager.shared.load() else {
-            return PetEntry(date: Date(), wellness: 100, hunger: 100, petName: "Blobby", spritePrefix: "baby_blob")
+            return PetEntry(date: Date(), wellness: 100, hunger: 100, happiness: 100,
+                            health: 100, petName: "Flameling", spritePrefix: "baby_flame",
+                            frameCount: 2, mood: .happy, isSick: false)
         }
-        let tree = EvolutionTree.load()
+        let tree    = EvolutionTree.load()
         let species = tree.species(for: pet.speciesID)
         return PetEntry(
             date:         Date(),
             wellness:     pet.wellness,
             hunger:       pet.hunger,
+            happiness:    pet.happiness,
+            health:       pet.health,
             petName:      species?.name ?? "???",
-            spritePrefix: species?.spritePrefix ?? "baby_blob"
+            spritePrefix: species?.spritePrefix ?? "baby_flame",
+            frameCount:   species?.frameCount ?? 2,
+            mood:         PetMood(pet: pet),
+            isSick:       pet.isSick
         )
     }
 }
@@ -52,76 +109,115 @@ struct PetComplicationEntryView: View {
 
     var body: some View {
         switch family {
-        case .accessoryCircular:
-            circularView
-        case .accessoryRectangular:
-            rectangularView
-        case .accessoryCorner:
-            cornerView
-        default:
-            circularView
+        case .accessoryCircular:    circularView
+        case .accessoryRectangular: rectangularView
+        case .accessoryCorner:      cornerView
+        default:                    circularView
         }
     }
 
-    // MARK: Circular: sprite + wellness ring
+    // MARK: - Circular
+    // Mood-coloured ring + sprite + mood emoji badge
     private var circularView: some View {
         ZStack {
+            // Background ring (dim)
             Circle()
-                .stroke(wellnessColor.opacity(0.3), lineWidth: 3)
+                .stroke(entry.mood.ringColor.opacity(0.25), lineWidth: 3)
+
+            // Filled wellness arc
             Circle()
                 .trim(from: 0, to: CGFloat(entry.wellness) / 100)
-                .stroke(wellnessColor, style: StrokeStyle(lineWidth: 3, lineCap: .round))
+                .stroke(
+                    entry.mood.ringColor,
+                    style: StrokeStyle(lineWidth: 3, lineCap: .round)
+                )
                 .rotationEffect(.degrees(-90))
 
-            // Fallback glyph when no real sprite asset exists
-            Image(systemName: "pawprint.fill")
-                .font(.system(size: 16))
-                .foregroundStyle(wellnessColor)
+            // Sprite (static frame — no TimelineView in complications)
+            PixelSpriteView(
+                spritePrefix: entry.spritePrefix,
+                frameCount:   entry.frameCount,
+                pixelSize:    2,
+                isStatic:     true
+            )
+            .frame(width: 28, height: 28)
+
+            // Mood badge — bottom-right
+            Text(entry.mood.emoji)
+                .font(.system(size: 9))
+                .offset(x: 11, y: 11)
         }
         .padding(2)
     }
 
-    // MARK: Rectangular: name + stat bars
+    // MARK: - Rectangular
+    // Sprite | Name + mood | HP bar
     private var rectangularView: some View {
-        VStack(alignment: .leading, spacing: 3) {
-            Text(entry.petName)
-                .font(.system(size: 11, weight: .bold))
-                .foregroundStyle(.white)
-            MiniBar(label: "🍖", value: entry.hunger,   color: .orange)
-            MiniBar(label: "💪", value: entry.wellness, color: wellnessColor)
+        HStack(spacing: 6) {
+            // Sprite
+            PixelSpriteView(
+                spritePrefix: entry.spritePrefix,
+                frameCount:   entry.frameCount,
+                pixelSize:    2,
+                isStatic:     true
+            )
+            .frame(width: 28, height: 28)
+
+            // Info column
+            VStack(alignment: .leading, spacing: 3) {
+                // Name + mood
+                HStack(spacing: 3) {
+                    Text(entry.petName)
+                        .font(.system(size: 11, weight: .bold))
+                        .foregroundStyle(.white)
+                        .lineLimit(1)
+                    Text(entry.mood.emoji)
+                        .font(.system(size: 10))
+                }
+
+                // Hunger bar
+                ComplicationBar(value: entry.hunger,   color: .orange, label: "🍖")
+                // HP bar
+                ComplicationBar(value: entry.health,   color: moodColor, label: "❤️")
+            }
         }
-        .padding(4)
+        .padding(.horizontal, 2)
     }
 
-    // MARK: Corner: compact
+    // MARK: - Corner
     private var cornerView: some View {
-        Image(systemName: "pawprint.fill")
-            .font(.system(size: 14))
-            .foregroundStyle(wellnessColor)
-            .widgetLabel(entry.petName)
+        PixelSpriteView(
+            spritePrefix: entry.spritePrefix,
+            frameCount:   entry.frameCount,
+            pixelSize:    2,
+            isStatic:     true
+        )
+        .frame(width: 20, height: 20)
+        .widgetLabel {
+            Text("\(entry.petName) \(entry.mood.emoji)")
+                .font(.system(size: 10, weight: .semibold))
+        }
     }
 
-    private var wellnessColor: Color {
-        switch entry.wellness {
-        case 70...: return .green
-        case 40..<70: return .yellow
-        default: return .red
-        }
+    // MARK: - Helpers
+    private var moodColor: Color {
+        entry.mood.ringColor
     }
 }
 
-// MARK: - MiniBar
-private struct MiniBar: View {
-    let label: String
+// MARK: - ComplicationBar
+private struct ComplicationBar: View {
     let value: Int
     let color: Color
+    let label: String
 
     var body: some View {
-        HStack(spacing: 2) {
+        HStack(spacing: 3) {
             Text(label).font(.system(size: 8))
             GeometryReader { geo in
                 ZStack(alignment: .leading) {
-                    RoundedRectangle(cornerRadius: 2).fill(Color.white.opacity(0.15))
+                    RoundedRectangle(cornerRadius: 2)
+                        .fill(Color.white.opacity(0.15))
                     RoundedRectangle(cornerRadius: 2)
                         .fill(color)
                         .frame(width: geo.size.width * CGFloat(value) / 100)
@@ -133,7 +229,8 @@ private struct MiniBar: View {
 }
 
 // MARK: - Widget declaration
-@main
+// NOTE: Move this file to a dedicated Widget Extension target in Xcode
+// (File > New > Target > Widget Extension) to enable it as a complication.
 struct PetComplicationWidget: Widget {
     let kind = "PetComplication"
 
@@ -147,8 +244,27 @@ struct PetComplicationWidget: Widget {
     }
 }
 
-#Preview(as: .accessoryCircular) {
+// MARK: - Previews
+#Preview("Circular – Happy", as: .accessoryCircular) {
     PetComplicationWidget()
 } timeline: {
-    PetEntry(date: .now, wellness: 75, hunger: 60, petName: "Knucklox", spritePrefix: "child_fighter")
+    PetEntry(date: .now, wellness: 85, hunger: 80, happiness: 90,
+             health: 95, petName: "Flameling", spritePrefix: "baby_flame",
+             frameCount: 2, mood: .happy, isSick: false)
+}
+
+#Preview("Circular – Sad", as: .accessoryCircular) {
+    PetComplicationWidget()
+} timeline: {
+    PetEntry(date: .now, wellness: 28, hunger: 15, happiness: 20,
+             health: 40, petName: "Flameling", spritePrefix: "baby_flame",
+             frameCount: 2, mood: .sad, isSick: false)
+}
+
+#Preview("Rectangular", as: .accessoryRectangular) {
+    PetComplicationWidget()
+} timeline: {
+    PetEntry(date: .now, wellness: 72, hunger: 60, happiness: 75,
+             health: 80, petName: "Drakeling", spritePrefix: "child_dragon",
+             frameCount: 2, mood: .happy, isSick: false)
 }

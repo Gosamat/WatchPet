@@ -5,7 +5,7 @@ import Foundation
 // Queries HealthKit for today's step count and active energy.
 // All reads are done lazily (on app launch / background refresh) — no continuous polling.
 @MainActor
-final class HealthKitManager: ObservableObject {
+final class HealthKitManager {
 
     static let shared = HealthKitManager()
     private let store = HKHealthStore()

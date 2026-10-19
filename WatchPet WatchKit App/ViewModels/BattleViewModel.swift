@@ -27,6 +27,7 @@ final class BattleViewModel: ObservableObject {
             petSpecies: playerSpecies,
             opponentSpecies: opponentSpecies
         )
+        petVM.discoverSpecies(opponentSpecies.id)
         showResult = false
     }
 
@@ -57,7 +58,7 @@ final class BattleViewModel: ObservableObject {
     // MARK: Resolve outcome
     private func finishBattle(state: BattleState) {
         let won = state.result == .playerWon
-        petVM?.recordBattleResult(won: won)
+        petVM?.recordBattleResult(won: won, remainingHP: state.player.hp)
         showResult = true
     }
 

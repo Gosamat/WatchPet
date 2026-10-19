@@ -14,6 +14,40 @@ struct EvolutionCondition: Codable {
     // Attribute thresholds — all listed keys must meet or exceed their value
     var attributeThresholds: [String: Int] = [:]
 
+    // Custom decoder so keys with default values (minTimeInStageHours,
+    // attributeThresholds) are optional in JSON — Swift's synthesised
+    // Codable uses `decode` (not `decodeIfPresent`) for non-Optional stored
+    // properties, which throws KeyNotFound and silently kills the whole tree.
+    init(from decoder: Decoder) throws {
+        let c = try decoder.container(keyedBy: CodingKeys.self)
+        minTimeInStageHours = try c.decodeIfPresent(Double.self,       forKey: .minTimeInStageHours) ?? 4
+        minHunger           = try c.decodeIfPresent(Int.self,          forKey: .minHunger)
+        minHappiness        = try c.decodeIfPresent(Int.self,          forKey: .minHappiness)
+        minCleanliness      = try c.decodeIfPresent(Int.self,          forKey: .minCleanliness)
+        minHealth           = try c.decodeIfPresent(Int.self,          forKey: .minHealth)
+        minBattleWins       = try c.decodeIfPresent(Int.self,          forKey: .minBattleWins)
+        minTotalSteps       = try c.decodeIfPresent(Int.self,          forKey: .minTotalSteps)
+        attributeThresholds = try c.decodeIfPresent([String: Int].self, forKey: .attributeThresholds) ?? [:]
+    }
+
+    init(minTimeInStageHours: Double = 4,
+         minHunger:           Int?   = nil,
+         minHappiness:        Int?   = nil,
+         minCleanliness:      Int?   = nil,
+         minHealth:           Int?   = nil,
+         minBattleWins:       Int?   = nil,
+         minTotalSteps:       Int?   = nil,
+         attributeThresholds: [String: Int] = [:]) {
+        self.minTimeInStageHours = minTimeInStageHours
+        self.minHunger           = minHunger
+        self.minHappiness        = minHappiness
+        self.minCleanliness      = minCleanliness
+        self.minHealth           = minHealth
+        self.minBattleWins       = minBattleWins
+        self.minTotalSteps       = minTotalSteps
+        self.attributeThresholds = attributeThresholds
+    }
+
     func isSatisfied(by pet: VirtualPet) -> Bool {
         guard pet.timeInStage / 3600 >= minTimeInStageHours else { return false }
         if let v = minHunger,      pet.hunger           < v { return false }

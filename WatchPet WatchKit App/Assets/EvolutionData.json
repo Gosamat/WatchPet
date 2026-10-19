@@ -1,148 +1,597 @@
 {
   "species": [
     {
-      "id": "baby_blob",
-      "name": "Blobby",
+      "id": "baby_flame",
+      "name": "Flameling",
       "stage": 0,
-      "spritePrefix": "baby_blob",
+      "spritePrefix": "baby_flame",
       "frameCount": 2,
-      "description": "A freshly hatched creature. It needs love and care to grow.",
+      "description": "A feisty little flame lizard. Its tiny horn glows when excited.",
       "moves": [
-        { "id": "tackle",  "name": "Tackle",  "basePower": 20, "accuracy": 95, "attributeBoost": "combat" },
-        { "id": "charm",   "name": "Charm",   "basePower": 15, "accuracy": 100, "attributeBoost": "cuteness" }
+        {
+          "id": "tackle",
+          "name": "Tackle",
+          "basePower": 10,
+          "accuracy": 95,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "ember",
+          "name": "Ember",
+          "basePower": 14,
+          "accuracy": 90,
+          "attributeBoost": "combat"
+        }
       ]
     },
     {
-      "id": "child_fighter",
-      "name": "Knucklox",
+      "id": "baby_sprout",
+      "name": "Sproutling",
+      "stage": 0,
+      "spritePrefix": "baby_sprout",
+      "frameCount": 2,
+      "description": "A round green blob with a single leaf on its head. Loves sunlight.",
+      "moves": [
+        {
+          "id": "tackle",
+          "name": "Tackle",
+          "basePower": 10,
+          "accuracy": 95,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "leaf_slap",
+          "name": "Leaf Slap",
+          "basePower": 12,
+          "accuracy": 95,
+          "attributeBoost": "cuteness"
+        }
+      ]
+    },
+    {
+      "id": "baby_spark",
+      "name": "Sparky",
+      "stage": 0,
+      "spritePrefix": "baby_spark",
+      "frameCount": 2,
+      "description": "A tiny cube with a bouncy antenna. Buzzes with static electricity.",
+      "moves": [
+        {
+          "id": "tackle",
+          "name": "Tackle",
+          "basePower": 10,
+          "accuracy": 95,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "zap",
+          "name": "Zap",
+          "basePower": 13,
+          "accuracy": 92,
+          "attributeBoost": "combat"
+        }
+      ]
+    },
+    {
+      "id": "baby_shadow",
+      "name": "Shady",
+      "stage": 0,
+      "spritePrefix": "baby_shadow",
+      "frameCount": 2,
+      "description": "A dark teardrop with glowing purple eyes. It watches everything silently.",
+      "moves": [
+        {
+          "id": "tackle",
+          "name": "Tackle",
+          "basePower": 10,
+          "accuracy": 95,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "glare",
+          "name": "Glare",
+          "basePower": 12,
+          "accuracy": 100,
+          "attributeBoost": "wisdom"
+        }
+      ]
+    },
+    {
+      "id": "child_dragon",
+      "name": "Drakeling",
       "stage": 1,
-      "spritePrefix": "child_fighter",
-      "frameCount": 3,
-      "description": "A scrappy fighter who loves a good scrap. High combat & athleticism.",
+      "spritePrefix": "child_dragon",
+      "frameCount": 2,
+      "description": "A growing dragon with wing nubs. Its roar can scorch the air.",
       "moves": [
-        { "id": "scratch",    "name": "Scratch",    "basePower": 18, "accuracy": 100, "attributeBoost": "combat" },
-        { "id": "sprint",     "name": "Sprint",     "basePower": 22, "accuracy": 90,  "attributeBoost": "athleticism" },
-        { "id": "bite",       "name": "Bite",       "basePower": 30, "accuracy": 85,  "attributeBoost": "combat" }
+        {
+          "id": "scratch",
+          "name": "Scratch",
+          "basePower": 18,
+          "accuracy": 100,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "ember",
+          "name": "Ember",
+          "basePower": 20,
+          "accuracy": 90,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "bite",
+          "name": "Bite",
+          "basePower": 28,
+          "accuracy": 85,
+          "attributeBoost": "combat"
+        }
       ]
     },
     {
-      "id": "child_cute",
-      "name": "Flufflet",
+      "id": "child_flora",
+      "name": "Florakat",
       "stage": 1,
-      "spritePrefix": "child_cute",
-      "frameCount": 3,
-      "description": "Impossibly adorable. Its cuteness is actually a devastating weapon.",
+      "spritePrefix": "child_flora",
+      "frameCount": 2,
+      "description": "A cat-like creature adorned with leaves and vines. Stealthy and fast.",
       "moves": [
-        { "id": "tackle",    "name": "Tackle",    "basePower": 20, "accuracy": 95,  "attributeBoost": "combat" },
-        { "id": "cute_eyes", "name": "Cute Eyes", "basePower": 28, "accuracy": 95,  "attributeBoost": "cuteness" },
-        { "id": "charm",     "name": "Charm",     "basePower": 15, "accuracy": 100, "attributeBoost": "cuteness" }
+        {
+          "id": "scratch",
+          "name": "Scratch",
+          "basePower": 18,
+          "accuracy": 100,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "vine_whip",
+          "name": "Vine Whip",
+          "basePower": 22,
+          "accuracy": 90,
+          "attributeBoost": "athleticism"
+        },
+        {
+          "id": "cute_eyes",
+          "name": "Cute Eyes",
+          "basePower": 25,
+          "accuracy": 95,
+          "attributeBoost": "cuteness"
+        }
       ]
     },
     {
-      "id": "adult_warrior",
-      "name": "Blazeron",
-      "stage": 2,
-      "spritePrefix": "adult_warrior",
-      "frameCount": 4,
-      "description": "A battle-hardened warrior. Forged through countless victories.",
+      "id": "child_circuit",
+      "name": "Circuiton",
+      "stage": 1,
+      "spritePrefix": "child_circuit",
+      "frameCount": 2,
+      "description": "A robot-like creature with a glowing visor. Processes battles like code.",
       "moves": [
-        { "id": "blazing",    "name": "Blazing Fist", "basePower": 40, "accuracy": 80, "attributeBoost": "combat" },
-        { "id": "swift_kick", "name": "Swift Kick",   "basePower": 35, "accuracy": 90, "attributeBoost": "athleticism" },
-        { "id": "bite",       "name": "Bite",         "basePower": 30, "accuracy": 85, "attributeBoost": "combat" },
-        { "id": "sprint",     "name": "Sprint",       "basePower": 22, "accuracy": 90, "attributeBoost": "athleticism" }
+        {
+          "id": "scratch",
+          "name": "Scratch",
+          "basePower": 18,
+          "accuracy": 100,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "shock",
+          "name": "Shock",
+          "basePower": 24,
+          "accuracy": 90,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "sprint",
+          "name": "Sprint",
+          "basePower": 22,
+          "accuracy": 90,
+          "attributeBoost": "athleticism"
+        }
       ]
     },
     {
-      "id": "adult_athlete",
-      "name": "Swiftora",
-      "stage": 2,
-      "spritePrefix": "adult_athlete",
-      "frameCount": 4,
-      "description": "Born to run. Every step you take makes Swiftora stronger.",
+      "id": "child_phantom",
+      "name": "Phantling",
+      "stage": 1,
+      "spritePrefix": "child_phantom",
+      "frameCount": 2,
+      "description": "A floating dark creature with cape-like wings. It drifts through shadows.",
       "moves": [
-        { "id": "swift_kick", "name": "Swift Kick",   "basePower": 35, "accuracy": 90, "attributeBoost": "athleticism" },
-        { "id": "sprint",     "name": "Sprint",       "basePower": 22, "accuracy": 90, "attributeBoost": "athleticism" },
-        { "id": "scratch",    "name": "Scratch",      "basePower": 18, "accuracy": 100, "attributeBoost": "combat" },
-        { "id": "tackle",     "name": "Tackle",       "basePower": 20, "accuracy": 95,  "attributeBoost": "combat" }
+        {
+          "id": "scratch",
+          "name": "Scratch",
+          "basePower": 18,
+          "accuracy": 100,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "shadow_claw",
+          "name": "Shadow Claw",
+          "basePower": 26,
+          "accuracy": 88,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "insight",
+          "name": "Insight",
+          "basePower": 22,
+          "accuracy": 88,
+          "attributeBoost": "wisdom"
+        }
       ]
     },
     {
-      "id": "adult_sage",
-      "name": "Luminox",
+      "id": "adult_inferno",
+      "name": "Infernus",
       "stage": 2,
-      "spritePrefix": "adult_sage",
-      "frameCount": 4,
-      "description": "Ancient wisdom radiates from its eyes. Well-loved and rarely dirty.",
+      "spritePrefix": "adult_inferno",
+      "frameCount": 2,
+      "description": "A full-grown fire dragon. Its wings spread embers across the sky.",
       "moves": [
-        { "id": "insight",   "name": "Insight",   "basePower": 32, "accuracy": 88, "attributeBoost": "wisdom" },
-        { "id": "cute_eyes", "name": "Cute Eyes", "basePower": 28, "accuracy": 95, "attributeBoost": "cuteness" },
-        { "id": "charm",     "name": "Charm",     "basePower": 15, "accuracy": 100,"attributeBoost": "cuteness" },
-        { "id": "tackle",    "name": "Tackle",    "basePower": 20, "accuracy": 95, "attributeBoost": "combat" }
+        {
+          "id": "fire_blast",
+          "name": "Fire Blast",
+          "basePower": 45,
+          "accuracy": 80,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "bite",
+          "name": "Bite",
+          "basePower": 30,
+          "accuracy": 85,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "ember",
+          "name": "Ember",
+          "basePower": 20,
+          "accuracy": 90,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "sprint",
+          "name": "Sprint",
+          "basePower": 22,
+          "accuracy": 90,
+          "attributeBoost": "athleticism"
+        }
+      ]
+    },
+    {
+      "id": "adult_gaia",
+      "name": "Gaiathorn",
+      "stage": 2,
+      "spritePrefix": "adult_gaia",
+      "frameCount": 2,
+      "description": "A majestic nature beast with great antlers. The forest bows to its presence.",
+      "moves": [
+        {
+          "id": "thorn_strike",
+          "name": "Thorn Strike",
+          "basePower": 38,
+          "accuracy": 88,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "vine_whip",
+          "name": "Vine Whip",
+          "basePower": 22,
+          "accuracy": 90,
+          "attributeBoost": "athleticism"
+        },
+        {
+          "id": "cute_eyes",
+          "name": "Cute Eyes",
+          "basePower": 28,
+          "accuracy": 95,
+          "attributeBoost": "cuteness"
+        },
+        {
+          "id": "charm",
+          "name": "Charm",
+          "basePower": 15,
+          "accuracy": 100,
+          "attributeBoost": "cuteness"
+        }
+      ]
+    },
+    {
+      "id": "adult_voltron",
+      "name": "Voltronix",
+      "stage": 2,
+      "spritePrefix": "adult_voltron",
+      "frameCount": 2,
+      "description": "A towering mech with electric wings. Its power output is off the charts.",
+      "moves": [
+        {
+          "id": "thunder",
+          "name": "Thunder",
+          "basePower": 42,
+          "accuracy": 82,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "shock",
+          "name": "Shock",
+          "basePower": 24,
+          "accuracy": 90,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "sprint",
+          "name": "Sprint",
+          "basePower": 22,
+          "accuracy": 90,
+          "attributeBoost": "athleticism"
+        },
+        {
+          "id": "tackle",
+          "name": "Tackle",
+          "basePower": 20,
+          "accuracy": 95,
+          "attributeBoost": "combat"
+        }
+      ]
+    },
+    {
+      "id": "adult_eclipse",
+      "name": "Eclipsion",
+      "stage": 2,
+      "spritePrefix": "adult_eclipse",
+      "frameCount": 2,
+      "description": "A vast dark entity with many watching eyes. It consumes light itself.",
+      "moves": [
+        {
+          "id": "void_surge",
+          "name": "Void Surge",
+          "basePower": 44,
+          "accuracy": 82,
+          "attributeBoost": "wisdom"
+        },
+        {
+          "id": "shadow_claw",
+          "name": "Shadow Claw",
+          "basePower": 26,
+          "accuracy": 88,
+          "attributeBoost": "combat"
+        },
+        {
+          "id": "insight",
+          "name": "Insight",
+          "basePower": 32,
+          "accuracy": 88,
+          "attributeBoost": "wisdom"
+        },
+        {
+          "id": "glare",
+          "name": "Glare",
+          "basePower": 12,
+          "accuracy": 100,
+          "attributeBoost": "wisdom"
+        }
       ]
     }
   ],
-
   "paths": [
     {
-      "fromSpeciesID": "baby_blob",
-      "toSpeciesID":   "child_fighter",
-      "priority":      10,
-      "condition": {
-        "minTimeInStageHours": 4,
-        "attributeThresholds": { "combat": 15 }
-      }
-    },
-    {
-      "fromSpeciesID": "baby_blob",
-      "toSpeciesID":   "child_cute",
-      "priority":      5,
-      "condition": {
-        "minTimeInStageHours": 4,
-        "minHappiness": 60,
-        "attributeThresholds": { "cuteness": 15 }
-      }
-    },
-
-    {
-      "fromSpeciesID": "child_fighter",
-      "toSpeciesID":   "adult_warrior",
-      "priority":      20,
+      "fromSpeciesID": "baby_flame",
+      "toSpeciesID": "child_dragon",
+      "priority": 10,
       "condition": {
         "minTimeInStageHours": 24,
-        "minBattleWins": 5,
-        "attributeThresholds": { "combat": 40, "athleticism": 20 }
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
       }
     },
     {
-      "fromSpeciesID": "child_fighter",
-      "toSpeciesID":   "adult_athlete",
-      "priority":      15,
+      "fromSpeciesID": "baby_flame",
+      "toSpeciesID": "child_circuit",
+      "priority": 5,
       "condition": {
         "minTimeInStageHours": 24,
-        "minTotalSteps": 10000,
-        "attributeThresholds": { "athleticism": 40 }
-      }
-    },
-
-    {
-      "fromSpeciesID": "child_cute",
-      "toSpeciesID":   "adult_sage",
-      "priority":      20,
-      "condition": {
-        "minTimeInStageHours": 24,
-        "minHappiness": 70,
-        "minCleanliness": 60,
-        "attributeThresholds": { "wisdom": 30, "cuteness": 30 }
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
       }
     },
     {
-      "fromSpeciesID": "child_cute",
-      "toSpeciesID":   "adult_athlete",
-      "priority":      15,
+      "fromSpeciesID": "baby_sprout",
+      "toSpeciesID": "child_flora",
+      "priority": 10,
       "condition": {
         "minTimeInStageHours": 24,
-        "minTotalSteps": 8000,
-        "attributeThresholds": { "athleticism": 35, "cuteness": 20 }
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "baby_sprout",
+      "toSpeciesID": "child_dragon",
+      "priority": 5,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "baby_spark",
+      "toSpeciesID": "child_circuit",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "baby_spark",
+      "toSpeciesID": "child_phantom",
+      "priority": 5,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "baby_shadow",
+      "toSpeciesID": "child_phantom",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "baby_shadow",
+      "toSpeciesID": "child_flora",
+      "priority": 5,
+      "condition": {
+        "minTimeInStageHours": 24,
+        "minHappiness": 50,
+        "minBattleWins": 3,
+        "minTotalSteps": 500
+      }
+    },
+    {
+      "fromSpeciesID": "child_dragon",
+      "toSpeciesID": "adult_inferno",
+      "priority": 20,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_dragon",
+      "toSpeciesID": "adult_gaia",
+      "priority": 15,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_dragon",
+      "toSpeciesID": "adult_voltron",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_flora",
+      "toSpeciesID": "adult_gaia",
+      "priority": 20,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_flora",
+      "toSpeciesID": "adult_eclipse",
+      "priority": 15,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_flora",
+      "toSpeciesID": "adult_inferno",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_circuit",
+      "toSpeciesID": "adult_voltron",
+      "priority": 20,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_circuit",
+      "toSpeciesID": "adult_inferno",
+      "priority": 15,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_circuit",
+      "toSpeciesID": "adult_gaia",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_phantom",
+      "toSpeciesID": "adult_eclipse",
+      "priority": 20,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_phantom",
+      "toSpeciesID": "adult_voltron",
+      "priority": 15,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
+      }
+    },
+    {
+      "fromSpeciesID": "child_phantom",
+      "toSpeciesID": "adult_gaia",
+      "priority": 10,
+      "condition": {
+        "minTimeInStageHours": 72,
+        "minBattleWins": 10,
+        "minHappiness": 65,
+        "minTotalSteps": 3000
       }
     }
   ]
